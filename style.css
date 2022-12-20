@@ -161,7 +161,7 @@ body{
 
   cursor: pointer;
 
-  opacity: 0.2;
+  opacity: 0;
 }
 
 .btn {
@@ -175,7 +175,7 @@ body{
 
   cursor: pointer;
 
-  opacity: 0.2;
+  opacity: 0;
 }
 
 .donw{
@@ -205,17 +205,21 @@ body{
   font-size: 18px;
   border: 5px solid green;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
   scrollbar-color: none;
 }
 li:hover{
-  background-color: rgba(0, 0, 0, 0.267);
+  background-color: rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
 
 #list-poke{
-  list-style: none;
-  margin-left: -20px;
+  padding: 0;
+  list-style-type: none;
+
+
+  text-align: center;
+
   margin-top: 0;
   font-size: 35px;
 }

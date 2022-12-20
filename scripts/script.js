@@ -13,6 +13,13 @@ async function getPokemonNames() {
     return pokeListNames;
   }
   
+function redrawSelectedListItem(listHtmlArray, lastPokeIdSelected, pokeIdSelected){
+    listHtmlArray[pokeIdSelected].scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"});
+
+    listHtmlArray[lastPokeIdSelected].style.backgroundColor = 'rgb(180, 252, 186)';
+    listHtmlArray[pokeIdSelected].style.backgroundColor = 'rgba(0, 0, 0, 0.267)';
+}
+
   function clickElementList(name, pokeName, pokeImg, pokeLife, pokeAtack, pokeDefense, pokeMoves) {
     updateView(name, pokeName, pokeImg, pokeLife, pokeAtack, pokeDefense, pokeMoves);
   }
@@ -39,27 +46,60 @@ async function getPokemonNames() {
   
     let move1 = document.getElementById("atk-1");
     let move2 = document.getElementById("atk-2");
+
+    let btnSelect = document.getElementById("btnSelect");
+    let btnUp = document.getElementById("btnUp");
+    let btnDown= document.getElementById("btnDown");
+
     let pokeMoves = [move1, move2];
   
     let pokeIdSelected = "221";
-  
+    let lastPokeIdSelected;
+    let listHtmlArray;
+
     let listHtml = document.getElementById("list-poke");
   
     const pokeListNames = await getPokemonNames();
   
     //criando a list elemento por elemento
     pokeListNames.forEach(pokemon => {
-      let ele = document.createElement("li");
-      ele.innerHTML = pokemon;
-      ele.onclick = () => {
-        clickElementList(ele.innerHTML, pokeName, pokeImg, pokeLife, pokeAtack, pokeDefense, pokeMoves);
+      let listItem = document.createElement("li");
+      listItem.innerHTML = pokemon;
+      listItem.onclick = () => {
+        clickElementList(listItem.innerHTML, pokeName, pokeImg, pokeLife, pokeAtack, pokeDefense, pokeMoves);
+        
+        lastPokeIdSelected = pokeIdSelected;
+        pokeIdSelected = listHtmlArray.indexOf(listItem);
+        
+        redrawSelectedListItem(listHtmlArray, lastPokeIdSelected, pokeIdSelected);
       }
-      listHtml.appendChild(ele);
+      listHtml.appendChild(listItem);
     })
   
-    //console.log(pokeListNames);
-  
-    //console.log(pokeObject)
+    listHtmlArray = [...listHtml.children];
+    
+    btnDown.onclick = () =>{
+      if(pokeIdSelected < listHtmlArray.length){
+        lastPokeIdSelected = pokeIdSelected;
+        pokeIdSelected += 1;
+        
+        redrawSelectedListItem(listHtmlArray, lastPokeIdSelected, pokeIdSelected);
+      }
+    }    
+
+    btnUp.onclick = () =>{
+      if(pokeIdSelected > 0){
+        lastPokeIdSelected = pokeIdSelected;
+        pokeIdSelected -= 1;
+        console.log(pokeIdSelected)
+      
+        redrawSelectedListItem(listHtmlArray, lastPokeIdSelected, pokeIdSelected);
+      }
+    }
+
+    btnSelect.onclick = () =>{
+      clickElementList(listHtmlArray[pokeIdSelected].innerHTML, pokeName, pokeImg, pokeLife, pokeAtack, pokeDefense, pokeMoves);
+    }
   
   }
   
