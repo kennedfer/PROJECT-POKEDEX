@@ -61,7 +61,6 @@ function redrawSelectedListItem(listHtmlArray, lastPokeIdSelected, pokeIdSelecte
   
     const pokeListNames = await getPokemonNames();
   
-    //criando a list elemento por elemento
     pokeListNames.forEach(pokemon => {
       let listItem = document.createElement("li");
       listItem.innerHTML = pokemon;
@@ -105,8 +104,6 @@ function redrawSelectedListItem(listHtmlArray, lastPokeIdSelected, pokeIdSelecte
   
   async function getPokemonInfo(id) {
     let urlApi = "https://pokeapi.co/api/v2/pokemon/" + id;
-    //lebrar de transformar isso em uma funçao kkkkkkk preguiça da peste qro deixar logo
-    //funcionando depois eu limpo td kkkkk
     let response = await fetch(urlApi);
     let data = await response.json();
   
